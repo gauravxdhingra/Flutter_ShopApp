@@ -40,14 +40,16 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         footer: GridTileBar(
-          leading: IconButton(
-              icon: Icon(
-                product.isFav ? Icons.favorite : Icons.favorite_border,
-                color: Theme.of(context).accentColor,
-              ),
-              onPressed: () {
-                product.toggleFavStatus();
-              }),
+          leading: Consumer<Product>(
+            builder: (ctx, product, child) => IconButton(
+                icon: Icon(
+                  product.isFav ? Icons.favorite : Icons.favorite_border,
+                  color: Theme.of(context).accentColor,
+                ),
+                onPressed: () {
+                  product.toggleFavStatus();
+                }),
+          ),
           backgroundColor: Colors.black87,
           title: Text(
             '\$' + product.price.toString(),

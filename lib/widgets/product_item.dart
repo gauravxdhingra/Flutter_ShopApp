@@ -21,10 +21,9 @@ class ProductItem extends StatelessWidget {
             imageUrl,
             fit: BoxFit.cover,
           ),
-          onTap: Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (ctx) => ProductDetailsScreen(),
-            ),
+          onTap: () => Navigator.of(context).pushNamed(
+            ProductDetailsScreen.routeName,
+            arguments: id,
           ),
         ),
         header: GridTileBar(

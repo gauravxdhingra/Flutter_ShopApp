@@ -38,10 +38,18 @@ class Products with ChangeNotifier {
     ),
   ];
 
-  var showFavOnly = false;
+  var _showFavOnly = false;
+
+  void showFavOnly() {
+    _showFavOnly = true;
+  }
+
+  void showAll() {
+    _showFavOnly = false;
+  }
 
   List<Product> get items {
-    if (showFavOnly)
+    if (_showFavOnly)
       return [..._items].where(
         (prodItem) => prodItem.isFav,
       );

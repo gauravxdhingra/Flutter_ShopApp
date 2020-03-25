@@ -14,11 +14,9 @@ enum FilterOptions {
 class ProductsOverviewScreen extends StatelessWidget {
   // const ProductsOverviewScreen({Key key}) : super(key: key);
 
-final ProductsContainer()=Provider.of<Products>(context) ;
-
   @override
   Widget build(BuildContext context) {
-
+    final productsContainer = Provider.of<Products>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -27,7 +25,10 @@ final ProductsContainer()=Provider.of<Products>(context) ;
           PopupMenuButton(
             onSelected: (FilterOptions selectedVal) {
               if (selectedVal == FilterOptions.All) {
-              } else {}
+                productsContainer.showFavOnly();
+              } else {
+                productsContainer.showAll();
+              }
             },
             icon: Icon(
               Icons.more_vert,

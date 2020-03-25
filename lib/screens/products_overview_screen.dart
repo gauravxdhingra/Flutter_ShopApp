@@ -11,24 +11,38 @@ enum FilterOptions {
   All,
 }
 
-class ProductsOverviewScreen extends StatelessWidget {
+class ProductsOverviewScreen extends StatefulWidget {
   // const ProductsOverviewScreen({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final productsContainer = Provider.of<Products>(context, listen: false);
+  _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
+}
 
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
+  var _showOnlyFav = false;
+
+  @override
+  Widget build(BuildContext context) {
+    // final productsContainer = Provider.of<Products>(context, listen: false);
+    // var _showOnlyFav = false;
     return Scaffold(
       appBar: AppBar(
         title: Text('My Shop'),
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterOptions selectedVal) {
-              if (selectedVal == FilterOptions.All) {
-                productsContainer.showFavOnly();
-              } else {
-                productsContainer.showAll();
-              }
+              // if (selectedVal == FilterOptions.All) {
+              //   productsContainer.showFavOnly();
+              // } else {
+              //   productsContainer.showAll();
+              // }
+
+              setState(() {
+                if (selectedVal == FilterOptions.Favourites) {
+                  _showOnlyFav = true;
+                } else
+                  _showOnlyFav = false;
+              });
             },
             icon: Icon(
               Icons.more_vert,
@@ -46,7 +60,7 @@ class ProductsOverviewScreen extends StatelessWidget {
           )
         ],
       ),
-      body: ProductsGrid(),
+      body: ProductsGrid(_showOnlyFav),
     );
   }
 }

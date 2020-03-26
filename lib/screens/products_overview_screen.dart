@@ -42,8 +42,9 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
               setState(() {
                 if (selectedVal == FilterOptions.Favourites) {
                   _showOnlyFav = true;
-                } else
+                } else {
                   _showOnlyFav = false;
+                }
               });
             },
             icon: Icon(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_udemy_shop_app/providers/cart.dart';
+import 'package:flutter_udemy_shop_app/widgets/badge.dart';
 import 'package:flutter_udemy_shop_app/widgets/products_grid.dart';
 import 'package:flutter_udemy_shop_app/providers/products_provider.dart';
 import 'package:provider/provider.dart';
@@ -49,15 +51,30 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
             ),
             itemBuilder: (_) => [
               PopupMenuItem(
-                child: Text('Only Favourites'),
+                child: Text('Only Favorites'),
                 value: FilterOptions.Favourites,
               ),
               PopupMenuItem(
                 child: Text('Show All'),
                 value: FilterOptions.All,
-              )
+              ),
             ],
-          )
+          ),
+          Consumer<Cart>(
+            builder: (
+              _,
+              cartData,
+              ch,
+            ) =>
+                Badge(
+              child: ch,
+              value: cartData.itemCount.toString(),
+            ),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {},
+            ),
+          ),
         ],
       ),
       body: ProductsGrid(_showOnlyFav),

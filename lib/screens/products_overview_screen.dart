@@ -52,20 +52,22 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                     ),
                   ],
                 ),
-                Consumer<Cart>(
-                  builder: (_, cart, child) => Badge(
-                    value: cart.itemCount.toString(),
-                    color: Colors.red,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.shopping_cart,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(CartScreen.routeName);
-                      },
-                    ),
+                // Consumer<Cart>(
+                //   builder: (context, cart, child) => Badge(
+                //     child:
+                IconButton(
+                  icon: Icon(
+                    Icons.shopping_cart,
                   ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(CartScreen.routeName);
+                  },
                 ),
+
+                // value: cart.itemCount.toString(),
+                // Colors.red,
+                // ),
+                // ),
               ],
             ),
           ),

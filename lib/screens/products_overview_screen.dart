@@ -24,40 +24,47 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
       appBar: AppBar(
         title: Text('MyShop'),
         actions: <Widget>[
-          PopupMenuButton(
-            onSelected: (FilterOptions selectedValue) {
-              setState(() {
-                if (selectedValue == FilterOptions.Favorites) {
-                  _showOnlyFavorites = true;
-                } else {
-                  _showOnlyFavorites = false;
-                }
-              });
-            },
-            icon: Icon(
-              Icons.more_vert,
-            ),
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                child: Text('Only Favorites'),
-                value: FilterOptions.Favorites,
-              ),
-              PopupMenuItem(
-                child: Text('Show All'),
-                value: FilterOptions.All,
-              ),
-            ],
-          ),
-          Consumer<Cart>(
-            builder: (_, cart, ch) => Badge(
-              child: ch,
-              value: cart.itemCount.toString(),
-            ),
-            child: IconButton(
-              icon: Icon(
-                Icons.shopping_cart,
-              ),
-              onPressed: () {},
+          FittedBox(
+            child: Row(
+              children: <Widget>[
+                PopupMenuButton(
+                  onSelected: (FilterOptions selectedValue) {
+                    setState(() {
+                      if (selectedValue == FilterOptions.Favorites) {
+                        _showOnlyFavorites = true;
+                      } else {
+                        _showOnlyFavorites = false;
+                      }
+                    });
+                  },
+                  icon: Icon(
+                    Icons.more_vert,
+                  ),
+                  itemBuilder: (_) => [
+                    PopupMenuItem(
+                      child: Text('Only Favorites'),
+                      value: FilterOptions.Favorites,
+                    ),
+                    PopupMenuItem(
+                      child: Text('Show All'),
+                      value: FilterOptions.All,
+                    ),
+                  ],
+                ),
+                Consumer<Cart>(
+                  builder: (_, cart, child) => Badge(
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.shopping_cart,
+                      ),
+                      onPressed: () {},
+                    ),
+                    value: cart.itemCount.toString(),
+                    color: Colors.red,
+                  ),
+                  // child:
+                ),
+              ],
             ),
           ),
         ],

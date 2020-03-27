@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_udemy_shop_app/providers/cart.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/product_details_screen.dart';
+import '../providers/cart.dart';
 import '../providers/product.dart';
+import '../screens/product_details_screen.dart';
 
 class ProductItem extends StatelessWidget {
   // const ProductItem({Key key}) : super(key: key);

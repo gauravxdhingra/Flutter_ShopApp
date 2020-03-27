@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_udemy_shop_app/providers/cart.dart';
+import 'package:flutter_udemy_shop_app/widgets/badge.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/products_grid.dart';
 import 'cart_screen.dart';
@@ -49,23 +52,20 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                     ),
                   ],
                 ),
-
-                // Consumer<Cart>(
-                //   builder: (_, cart, child) => Badge(
-                //     child:
-                IconButton(
-                  icon: Icon(
-                    Icons.shopping_cart,
+                Consumer<Cart>(
+                  builder: (_, cart, child) => Badge(
+                    value: cart.itemCount.toString(),
+                    color: Colors.red,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.shopping_cart,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(CartScreen.routeName);
+                      },
+                    ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(CartScreen.routeName);
-                  },
                 ),
-                //   value: cart.itemCount.toString(),
-                //   color: Colors.red,
-                // ),
-                // child:
-                // ),
               ],
             ),
           ),

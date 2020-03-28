@@ -25,18 +25,18 @@ class CartItem extends StatelessWidget {
       background: Container(
         color: Theme.of(context).errorColor,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             Icon(
               Icons.delete,
               color: Colors.white,
               size: 40,
             ),
-            Icon(
-              Icons.delete,
-              color: Colors.white,
-              size: 40,
-            ),
+            // Icon(
+            //   Icons.delete,
+            //   color: Colors.white,
+            //   size: 40,
+            // ),
           ],
         ),
         // alignment: Alignment.centerRight,

@@ -24,19 +24,29 @@ class CartItem extends StatelessWidget {
       key: ValueKey(id),
       background: Container(
         color: Theme.of(context).errorColor,
-        child: Icon(
-          Icons.delete,
-          color: Colors.white,
-          size: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+              size: 40,
+            ),
+            Icon(
+              Icons.delete,
+              color: Colors.white,
+              size: 40,
+            ),
+          ],
         ),
-        alignment: Alignment.centerRight,
-        padding: EdgeInsets.only(right: 20),
+        // alignment: Alignment.centerRight,
+        padding: EdgeInsets.all(20),
         margin: EdgeInsets.symmetric(
           horizontal: 15,
           vertical: 4,
         ),
       ),
-      direction: DismissDirection.endToStart,
+      // direction: DismissDirection.endToStart,
       onDismissed: (direction) {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       },

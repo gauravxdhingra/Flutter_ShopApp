@@ -106,7 +106,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     // print(_editedProduct.imageUrl);
 
     if (_editedProduct.id != null) {
-      
+      Provider.of<Products>(context, listen: false)
+          .updateProduct(_editedProduct.id, _editedProduct);
     } else {
       Provider.of<Products>(context, listen: false).addProduct(_editedProduct);
     }
@@ -152,6 +153,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                       onSaved: (value) => _editedProduct = Product(
                           id: _editedProduct.id,
+                          isFavorite: _editedProduct.isFavorite,
                           title: value,
                           description: _editedProduct.description,
                           price: _editedProduct.price,
@@ -178,6 +180,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       },
                       onSaved: (value) => _editedProduct = Product(
                           id: _editedProduct.id,
+                          isFavorite: _editedProduct.isFavorite,
                           title: _editedProduct.title,
                           description: _editedProduct.description,
                           price: double.parse(value),
@@ -206,6 +209,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           id: _editedProduct.id,
                           title: _editedProduct.title,
                           description: value,
+                          isFavorite: _editedProduct.isFavorite,
                           price: _editedProduct.price,
                           imageUrl: _editedProduct.imageUrl),
                     ),
@@ -283,6 +287,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             onFieldSubmitted: (_) {
                               _saveForm();
                             },
+
                             validator: (value) {
                               if (value.isEmpty)
                                 return 'Please provide an Image URL';
@@ -298,6 +303,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             },
                             onSaved: (value) => _editedProduct = Product(
                                 id: _editedProduct.id,
+                                isFavorite: _editedProduct.isFavorite,
                                 title: _editedProduct.title,
                                 description: _editedProduct.description,
                                 price: _editedProduct.price,

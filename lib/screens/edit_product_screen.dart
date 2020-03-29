@@ -14,6 +14,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imgUrlFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
 
+  final _form = GlobalKey<FormState>();
+
   @override
   void dispose() {
     _imgUrlFocusNode.removeListener(_updateImgUrl);
@@ -33,22 +35,30 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   void _updateImgUrl() {
-    if(!_imgUrlFocusNode.hasFocus){
-      setState(() {
-        
-      });
+    if (!_imgUrlFocusNode.hasFocus) {
+      setState(() {});
     }
   }
+
+  void _saveForm() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Product'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () {
+                _saveForm();
+              })
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Form(
+          key: _form,
           child: ListView(
             children: <Widget>[
               TextFormField(
@@ -98,15 +108,48 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       ),
                     ),
                     child: Container(
-                        child: _imageUrlController.text.isEmpty
-                            ? Text('Enter a URL')
-                            : FittedBox(
-                                fit: BoxFit.cover,
-                                child: Image.network(
-                                  _imageUrlController.text,
+                      alignment: Alignment.center,
+                      child: _imageUrlController.text.isEmpty
+                          ? Text('Enter a URL')
+                          : Stack(
+                              fit: StackFit.expand,
+                              alignment: Alignment.bottomCenter,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              // crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                FittedBox(
+                                  fit: BoxFit.cover,
+                                  child: Image.network(
+                                    _imageUrlController.text,
+                                    alignment: Alignment.center,
+                                  ),
                                 ),
-                              )),
+                                Positioned(
+                                  bottom: 3,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
+                                      child: Text(
+                                        ' Image Preview ',
+                                        textScaleFactor: 0.8,
+                                        softWrap: true,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          // fontSize: 150,
+                                          backgroundColor: Colors.black54,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                    ),
                   ),
+
+                  // ),
                   Expanded(
                     child: TextFormField(
                       decoration: InputDecoration(labelText: 'Image URL'),
@@ -114,6 +157,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       textInputAction: TextInputAction.done,
                       controller: _imageUrlController,
                       focusNode: _imgUrlFocusNode,
+                      onFieldSubmitted: (_) {
+                        _saveForm();
+                      },
                     ),
                   ),
                 ],

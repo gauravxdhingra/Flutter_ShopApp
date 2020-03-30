@@ -36,7 +36,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _descFocus.dispose();
     _imgUrlFocusNode.dispose();
     _imageUrlController.dispose();
-
     super.dispose();
   }
 
@@ -118,18 +117,44 @@ class _EditProductScreenState extends State<EditProductScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedProduct)
-          .then(
+      Provider.of<Products>(
+        context,
+        listen: false,
+      ).addProduct(_editedProduct).catchError(
+        (error) {
+          // _isLoading = false;
+          setState(() {
+            _isLoading = false;
+          });
+          return showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+              title: Text('An Error Occured'),
+              content: Text(
+                'Something went Wrong',
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Okay'),
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ).then(
         (_) {
           setState(() {
             _isLoading = false;
           });
+          print('before pop');
           Navigator.of(context).pop();
+          print('after pop');
         },
       );
     }
-
     // Navigator.of(context).pop();
   }
 
@@ -140,10 +165,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
         title: Text('Edit Product'),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.save),
-              onPressed: () {
-                _saveForm();
-              })
+            icon: Icon(Icons.save),
+            onPressed: () => _saveForm(),
+          )
         ],
       ),
       body: _isLoading

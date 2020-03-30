@@ -65,9 +65,9 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void addProduct(Product product) {
-    const url = 'https://flutter-shop-udemy.firebaseio.com//products.json';
-    http
+  Future<void> addProduct(Product product) {
+    const url = 'https://flutter-shop-udemy.firebaseio.com/products.json';
+    return http
         .post(
       url,
       body: json.encode(
@@ -82,13 +82,14 @@ class Products with ChangeNotifier {
     )
         .then(
       (response) {
-        print(jsonDecode(response.body));
+        print(jsonDecode(response.body)['name']);
         final newProduct = Product(
-            id: jsonDecode(response.body)['name'],
-            title: product.title,
-            description: product.description,
-            price: product.price,
-            imageUrl: product.imageUrl);
+          id: jsonDecode(response.body)['name'],
+          title: product.title,
+          description: product.description,
+          price: product.price,
+          imageUrl: product.imageUrl,
+        );
 
         _items.add(newProduct);
 

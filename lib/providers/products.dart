@@ -65,42 +65,41 @@ class Products with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> addProduct(Product product) {
+  Future<void> addProduct(Product product) async {
     const url = 'https://flutter-shop-udemy.firebaseio.com/products.json';
-    return http
-        .post(
-      url,
-      body: json.encode(
-        {
-          'title': product.title,
-          'description': product.description,
-          'imeageUrl': product.imageUrl,
-          'price': product.price,
-          'fav': product.isFavorite,
-        },
-      ),
-    )
-        .then(
-      (response) {
-        print(json.decode(response.body)['name']);
-        final newProduct = Product(
-          id: jsonDecode(response.body)['name'],
-          title: product.title,
-          description: product.description,
-          price: product.price,
-          imageUrl: product.imageUrl,
-        );
 
-        _items.add(newProduct);
+    try {
+      final response = await http.post(
+        url,
+        body: json.encode(
+          {
+            'title': product.title,
+            'description': product.description,
+            'imeageUrl': product.imageUrl,
+            'price': product.price,
+            'fav': product.isFavorite,
+          },
+        ),
+      );
+      print(json.decode(response.body)['name']);
+      final newProduct = Product(
+        id: jsonDecode(response.body)['name'],
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      );
 
-        notifyListeners();
-      },
-    ).catchError((error) {
+      _items.add(newProduct);
+
+      notifyListeners();
+    } catch (error) {
       print(error);
       throw error;
-    });
-    // _items.add(value);
+    }
   }
+
+  // _items.add(value);
 
   void updateProduct(String id, Product newProduct) {
     final prodIndex = _items.indexWhere((prodId) => prodId.id == id);

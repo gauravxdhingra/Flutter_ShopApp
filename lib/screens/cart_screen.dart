@@ -88,6 +88,7 @@ class _OrderButtonState extends State<OrderButton> {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
+      disabledColor: Colors.black38,
       color: Theme.of(context).primaryColor,
       child: _isLoading
           ? CircularProgressIndicator()
@@ -107,7 +108,7 @@ class _OrderButtonState extends State<OrderButton> {
                 widget.cart.totalAmount,
               );
               setState(() {
-                _isLoading = true;
+                _isLoading = false;
               });
               widget.cart.clear();
             },

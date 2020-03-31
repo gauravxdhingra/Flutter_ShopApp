@@ -87,32 +87,32 @@ class _OrderButtonState extends State<OrderButton> {
   var _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      disabledColor: Colors.black38,
-      color: Theme.of(context).primaryColor,
-      child: _isLoading
-          ? CircularProgressIndicator()
-          : Text(
+    return _isLoading
+        ? CircularProgressIndicator()
+        : FlatButton(
+            disabledColor: Colors.black38,
+            color: Theme.of(context).primaryColor,
+            child: Text(
               'ORDER NOW !',
               style: TextStyle(color: Colors.white),
             ),
-      onPressed: (widget.cart.totalAmount <= 0 || _isLoading)
-          ? null
-          : () async {
-              setState(() {
-                _isLoading = true;
-              });
+            onPressed: (widget.cart.totalAmount <= 0 || _isLoading)
+                ? null
+                : () async {
+                    setState(() {
+                      _isLoading = true;
+                    });
 
-              await Provider.of<Orders>(context).addOrder(
-                widget.cart.items.values.toList(),
-                widget.cart.totalAmount,
-              );
-              setState(() {
-                _isLoading = false;
-              });
-              widget.cart.clear();
-            },
-      textColor: Theme.of(context).primaryColor,
-    );
+                    await Provider.of<Orders>(context).addOrder(
+                      widget.cart.items.values.toList(),
+                      widget.cart.totalAmount,
+                    );
+                    setState(() {
+                      _isLoading = false;
+                    });
+                    widget.cart.clear();
+                  },
+            textColor: Theme.of(context).primaryColor,
+          );
   }
 }

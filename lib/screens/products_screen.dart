@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/products.dart';
 import '../widgets/app_drawer.dart';
 import '../widgets/user_product_item.dart';
-import 'edit_product_screen.dart';
+import './edit_product_screen.dart';
 
 class UserProductsScreen extends StatelessWidget {
   // const UserProductsScreen({Key key}) : super(key: key);

@@ -72,16 +72,17 @@ class Products with ChangeNotifier {
       final extractedData =
           (json.decode(response.body)) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
-      extractedData.forEach((prodId, prodData) {
-        loadedProducts.add(Product(
-          description: prodData['description'],
-          id: prodId,
-          imageUrl: prodData['imageUrl'],
-          price: prodData['price'],
-          title: prodData['title'],
-          isFavorite: prodData['fav'],
-        ));
-      });
+      if (extractedData != null)
+        extractedData.forEach((prodId, prodData) {
+          loadedProducts.add(Product(
+            description: prodData['description'],
+            id: prodId,
+            imageUrl: prodData['imageUrl'],
+            price: prodData['price'],
+            title: prodData['title'],
+            isFavorite: prodData['fav'],
+          ));
+        });
       _items = loadedProducts;
       notifyListeners();
     } catch (error) {
@@ -146,7 +147,22 @@ class Products with ChangeNotifier {
   }
 
   void deleteProduct(String id) {
+    final url = 'https://flutter-shop-udemy.firebaseio.com/products/$id.json';
+
+    final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
+    var existingProduct = _items[existingProductIndex];
+
+    _items.removeAt(existingProductIndex);
+
     _items.removeWhere((prod) => prod.id == id);
+    http.delete(url).then((_) {
+      existingProduct = null;
+    }).catchError((_) {
+      _items.insert(
+        existingProductIndex,
+        existingProduct,
+      );
+    });
     notifyListeners();
   }
 }

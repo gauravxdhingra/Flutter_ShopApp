@@ -155,7 +155,11 @@ class Products with ChangeNotifier {
     _items.removeAt(existingProductIndex);
 
     _items.removeWhere((prod) => prod.id == id);
-    http.delete(url).then((_) {
+    http.delete(url).then((response) {
+if(response.statusCode>=400){
+  throw 
+}
+
       existingProduct = null;
     }).catchError((_) {
       _items.insert(

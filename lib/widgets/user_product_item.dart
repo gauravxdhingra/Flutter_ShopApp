@@ -39,8 +39,11 @@ class UserProductItem extends StatelessWidget {
                   Provider.of<Products>(context, listen: false)
                       .deleteProduct(id);
                 } catch (error) {
-                  scaffold.showSnackBar(
-                      (SnackBar(content: Text('Deleting failed!'))));
+                  scaffold.showSnackBar((SnackBar(
+                      content: Text(
+                    'Deleting failed!',
+                    textAlign: TextAlign.center,
+                  ))));
                 }
               },
               color: Theme.of(context).errorColor,
